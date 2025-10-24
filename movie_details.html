@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inception - CineMatch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* CineMatch Brand Colors - Personalized */
+            --cm-steel-blue: #2B7A9B;
+            --cm-sunset-orange: #FF6B35;
+            --cm-charcoal: #1A1D23;
+            --cm-dark-bg: #0F1419;
+            --cm-midnight: #0A0C10;
+            --cm-slate: #2A2E35;
+            --cm-steel: #4A5568;
+            --cm-silver: #9CA3AF;
+            --cm-light-gray: #F5F5F5;
+            --cm-off-white: #FAFAFA;
+            --cm-pearl: #FFFFFF;
+            
+            /* Accent Colors - Updated */
+            --cm-gold: #F59E0B;
+            --cm-magenta: #D946EF;
+            --cm-vibrant-teal: #06D6A0;
+            --cm-purple: #8B5CF6;
+            --cm-amber: #FFA726;
+            --cm-rose: #F43F5E;
+            --cm-green: #10B981;
+            
+            /* Typography - Modern */
+            --font-display: 'Sora', sans-serif;
+            --font-primary: 'Plus Jakarta Sans', sans-serif;
+            
+            /* Spacing Scale */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            --space-xxxl: 64px;
+            
+            /* Animation */
+            --anim-fast: 0.15s;
+            --anim-normal: 0.3s;
+            --anim-slow: 0.5s;
+            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            background: var(--cm-off-white);
+            color: var(--cm-charcoal);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header - Reused from landing */
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+            color: var(--cm-charcoal);
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            transition: all var(--anim-normal);
+        }
+
+        .logo:hover {
+            color: var(--cm-steel-blue);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--space-xl);
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--cm-steel);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all var(--anim-normal);
+            position: relative;
+            padding: var(--space-sm) 0;
+        }
+
+        .nav-link:hover {
+            color: var(--cm-steel-blue);
+        }
+
+        .nav-link.active {
+            color: var(--cm-steel-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--cm-steel-blue);
+        }
+
+        /* Hero Backdrop Section */
+        .hero-backdrop {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            background: linear-gradient(135deg, rgba(43, 122, 155, 0.85), rgba(255, 107, 53, 0.75)),
+                        url('https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=1920&h=1080&fit=crop&q=90');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .hero-backdrop::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 0;
+        }
+
+        .hero-backdrop::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(26, 29, 35, 0.6) 50%, 
+                rgba(26, 29, 35, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .backdrop-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-xxl) var(--space-xl);
+            color: var(--cm-pearl);
+            width: 100%;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--cm-pearl);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+            opacity: 0.9;
+            transition: all var(--anim-normal);
+        }
+
+        .back-button:hover {
+                opacity: 1;
+            transform: translateX(-4px);
+            color: var(--cm-vibrant-teal);
+        }
+
+        .movie-title-hero {
+            font-size: 56px;
+            font-weight: 900;
+            font-family: var(--font-display);
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-metadata {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-md);
+            font-size: 16px;
+        }
+
+        .metadata-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: 6px 16px;
+            background: rgba(245, 158, 11, 0.2);
+            border: 2px solid var(--cm-gold);
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            color: var(--cm-gold);
+        }
+
+        .hero-genres {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .genre-tag {
+            font-size: 12px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-full);
+            color: var(--cm-pearl);
+            font-weight: 600;
+        }
+
+        /* Movie Info Panel */
+        .movie-info-section {
+            max-width: 1400px;
+            margin: -100px auto 0;
+            padding: 0 var(--space-xl);
+            position: relative;
+            z-index: 10;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: var(--space-xxl);
+            margin-bottom: var(--space-xxxl);
+        }
+
+        .poster-container {
+            position: sticky;
+            top: calc(80px + var(--space-lg));
+            height: fit-content;
+        }
+
+        .movie-poster-large {
+            width: 100%;
+            aspect-ratio: 2/3;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--cm-slate), var(--cm-steel));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+        }
+
+        .movie-poster-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-panel {
+            background: var(--cm-pearl);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xxl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-title {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-lg);
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .info-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: var(--space-md);
+        }
+
+        .info-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--cm-steel);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: var(--cm-charcoal);
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 16px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--anim-normal) var(--ease-out);
+            text-decoration: none;
+            font-family: var(--font-primary);
+        }
+
+        .btn-primary {
+            background: var(--cm-sunset-orange);
+            color: var(--cm-pearl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background: #E85A28;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--cm-steel);
+            border: 2px solid var(--cm-light-gray);
+        }
+
+        .btn-secondary:hover {
+            background: var(--cm-light-gray);
+            border-color: var(--cm-steel);
+            color: var(--cm-charcoal);
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--cm-steel-blue);
+            border-color: var(--cm-steel-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--cm-steel-blue);
+            color: var(--cm-pearl);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 1400px;
+            margin: 0 auto var(--space-xxxl);
+            padding: 0 var(--space-xl);
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-lg);
+        }
+
+        .plot-text {
+            max-width: 800px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-md);
+        }
+
+        /* Cast & Crew */
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .cast-card {
+            text-align: center;
+            transition: all var(--anim-normal);
+            cursor: pointer;
+        }
+
+        .cast-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .cast-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--cm-slate), var(--cm-steel));
+            margin: 0 auto var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--anim-normal);
+        }
+
+        .cast-card:hover .cast-photo {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cast-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-full);
+        }
+
+        .cast-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-xs);
+        }
+
+        .cast-role {
+            font-size: 14px;
+            color: var(--cm-steel);
+        }
+
+        /* Trailer Section */
+        .trailer-container {
+            max-width: 900px;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, var(--cm-slate), var(--cm-steel));
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .trailer-placeholder {
+            text-align: center;
+            color: var(--cm-pearl);
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--cm-sunset-orange);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto var(--space-md);
+            cursor: pointer;
+            transition: all var(--anim-normal);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Related Movies Carousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            gap: var(--space-lg);
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding-bottom: var(--space-md);
+            scrollbar-width: thin;
+            scrollbar-color: var(--cm-silver) transparent;
+        }
+
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--cm-silver);
+            border-radius: var(--radius-full);
+        }
+
+        .carousel::-webkit-scrollbar-thumb:hover {
+            background: var(--cm-steel);
+        }
+
+        /* Movie Card - Reused from landing */
+        .movie-card {
+            flex: 0 0 200px;
+            background: var(--cm-pearl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--ease-out);
+            cursor: pointer;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 300px;
+            aspect-ratio: 2/3;
+            background: linear-gradient(135deg, var(--cm-slate), var(--cm-steel));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s var(--ease-out);
+        }
+
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+
+        .watchlist-btn {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.8);
+            transition: all 0.4s var(--ease-out);
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .movie-card:hover .watchlist-btn {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .watchlist-btn:hover {
+            background: var(--cm-sunset-orange);
+            color: var(--cm-pearl);
+            transform: translateY(0) scale(1.15);
+        }
+
+        .movie-info {
+            padding: var(--space-md);
+        }
+
+        .movie-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: var(--space-xs);
+            color: var(--cm-charcoal);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: var(--space-sm);
+            font-size: 13px;
+            color: var(--cm-steel);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--cm-gold);
+            font-weight: 600;
+        }
+
+        /* Footer - Reused from landing */
+        .footer {
+            background: var(--cm-charcoal);
+            color: var(--cm-silver);
+            padding: var(--space-xxl) var(--space-xl);
+            margin-top: var(--space-xxxl);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-xxl);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-pearl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--cm-pearl);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            font-size: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .footer-link {
+            color: var(--cm-silver);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all var(--anim-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--cm-pearl);
+            padding-left: var(--space-xs);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: var(--space-xl) auto 0;
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--cm-slate);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Modal - Reused from landing */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            animation: modalFadeIn var(--anim-normal) ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--cm-pearl);
+            padding: var(--space-xxl);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideUp 0.4s var(--ease-out);
+            text-align: center;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            color: var(--cm-steel);
+            transition: all var(--anim-fast);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: var(--cm-light-gray);
+            color: var(--cm-charcoal);
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-md);
+        }
+
+        .modal-text {
+            font-size: 16px;
+            color: var(--cm-steel);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+        }
+
+        /* Page Load & Transition Animations */
+        body {
+            animation: pageLoad 0.5s ease;
+        }
+
+        @keyframes pageLoad {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page Exit Transition */
+        body.page-exit {
+            animation: pageExit 0.3s ease forwards;
+        }
+
+        @keyframes pageExit {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-backdrop {
+                background-attachment: scroll;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-container {
+                position: static;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .movie-info-section {
+                margin-top: var(--space-xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .movie-title-hero {
+                font-size: 36px;
+            }
+
+            .movie-metadata {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-sm);
+            }
+
+            .info-panel {
+                padding: var(--space-lg);
+            }
+
+            .info-item {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .cast-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="landing.html" class="logo">
+                <span class="logo-icon">🎬</span>
+                <span>CineMatch</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="landing.html" class="nav-link">Home</a></li>
+                    <li><a href="browse.html" class="nav-link">Browse</a></li>
+                    <li><a href="search.html" class="nav-link">Search</a></li>
+                    <li><a href="watchlist.html" class="nav-link">Watchlist</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Backdrop Section -->
+    <section class="hero-backdrop">
+        <div class="hero-content">
+            <a href="browse.html" class="back-button">← Back to Browse</a>
+                <h1 class="movie-title-hero">Inception</h1>
+            <div class="movie-metadata">
+                <span class="metadata-item">2010</span>
+                <span class="metadata-item">148 min</span>
+                <span class="rating-badge">⭐ 8.8</span>
+                </div>
+            <div class="hero-genres">
+                <span class="genre-tag">Sci-Fi</span>
+                <span class="genre-tag">Thriller</span>
+                <span class="genre-tag">Action</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movie Info Section -->
+    <section class="movie-info-section">
+        <div class="info-grid">
+            <!-- Poster -->
+            <div class="poster-container">
+            <div class="movie-poster-large">
+                    <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=400&h=600&fit=crop" alt="Inception Poster">
+            </div>
+                </div>
+
+            <!-- Info Panel -->
+            <div class="info-panel">
+                <h2 class="info-title">Movie Information</h2>
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="info-label">Director</span>
+                        <span class="info-value">Christopher Nolan</span>
+                </div>
+                    <div class="info-item">
+                        <span class="info-label">Cast</span>
+                        <span class="info-value">Leonardo DiCaprio, Tom Hardy, Elliot Page, Joseph Gordon-Levitt</span>
+                </div>
+                    <div class="info-item">
+                        <span class="info-label">Release Date</span>
+                        <span class="info-value">July 16, 2010</span>
+                </div>
+                    <div class="info-item">
+                        <span class="info-label">Language</span>
+                        <span class="info-value">English</span>
+                </div>
+                    <div class="info-item">
+                        <span class="info-label">Budget</span>
+                        <span class="info-value">$160 million</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Box Office</span>
+                        <span class="info-value">$836.8 million</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="addToWatchlist()">
+                        <span>⭐</span>
+                        Add to Watchlist
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareMovie()">
+                        <span>📤</span>
+                        Share
+                    </button>
+                    <a href="#trailer" class="btn btn-outline">
+                        <span>▶</span>
+                        Watch Trailer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plot Synopsis Section -->
+    <section class="content-section">
+        <h2 class="section-title">Plot Synopsis</h2>
+        <p class="plot-text">
+            A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.
+        </p>
+        <p class="plot-text">
+            Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing valuable secrets from deep within the subconscious during the dream state, when the mind is at its most vulnerable. Cobb's rare ability has made him a coveted player in this treacherous new world of corporate espionage, but it has also made him an international fugitive and cost him everything he has ever loved.
+        </p>
+        <p class="plot-text">
+            Now Cobb is being offered a chance at redemption. One last job could give him his life back but only if he can accomplish the impossible: inception. Instead of the perfect heist, Cobb and his team of specialists have to pull off the reverse: their task is not to steal an idea, but to plant one.
+        </p>
+    </section>
+
+    <!-- Cast & Crew Section -->
+    <section class="content-section">
+        <h2 class="section-title">Cast & Crew</h2>
+        <div class="cast-grid">
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="Leonardo DiCaprio">
+                </div>
+                <div class="cast-name">Leonardo DiCaprio</div>
+                <div class="cast-role">Dom Cobb</div>
+            </div>
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop" alt="Tom Hardy">
+                </div>
+                <div class="cast-name">Tom Hardy</div>
+                <div class="cast-role">Eames</div>
+            </div>
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop" alt="Elliot Page">
+                </div>
+                <div class="cast-name">Elliot Page</div>
+                <div class="cast-role">Ariadne</div>
+            </div>
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop" alt="Joseph Gordon-Levitt">
+                </div>
+                <div class="cast-name">Joseph Gordon-Levitt</div>
+                <div class="cast-role">Arthur</div>
+            </div>
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop" alt="Marion Cotillard">
+                </div>
+                <div class="cast-name">Marion Cotillard</div>
+                <div class="cast-role">Mal</div>
+            </div>
+            <div class="cast-card">
+                <div class="cast-photo">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop" alt="Christopher Nolan">
+                </div>
+                <div class="cast-name">Christopher Nolan</div>
+                <div class="cast-role">Director</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trailer Section -->
+    <section class="content-section" id="trailer">
+        <h2 class="section-title">Trailer</h2>
+        <div class="trailer-container">
+            <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/YoHD9XEInc0" 
+                title="Inception Official Trailer" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                style="border-radius: var(--radius-xl);">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Related Movies Section -->
+    <section class="content-section">
+        <h2 class="section-title">More Like This</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- Related Movie 1 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=400&h=600&fit=crop" alt="Interstellar">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Interstellar</h3>
+                        <div class="movie-meta">
+                        <span>2014</span>
+                            <span class="rating">⭐ 8.7</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 2 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop" alt="The Prestige">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Prestige</h3>
+                        <div class="movie-meta">
+                            <span>2006</span>
+                            <span class="rating">⭐ 8.5</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 3 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=600&fit=crop" alt="The Matrix">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Matrix</h3>
+                        <div class="movie-meta">
+                            <span>1999</span>
+                            <span class="rating">⭐ 8.7</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 4 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1571847820157-97c00e4d0e2e?w=400&h=600&fit=crop" alt="Shutter Island">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Shutter Island</h3>
+                        <div class="movie-meta">
+                            <span>2010</span>
+                            <span class="rating">⭐ 8.2</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 5 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&h=600&fit=crop" alt="Memento">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Memento</h3>
+                        <div class="movie-meta">
+                            <span>2000</span>
+                            <span class="rating">⭐ 8.4</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 6 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=400&h=600&fit=crop" alt="The Dark Knight">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Dark Knight</h3>
+                        <div class="movie-meta">
+                            <span>2008</span>
+                            <span class="rating">⭐ 9.0</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 7 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&h=600&fit=crop" alt="Tenet">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Tenet</h3>
+                        <div class="movie-meta">
+                            <span>2020</span>
+                            <span class="rating">⭐ 7.3</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Related Movie 8 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1574267432644-f71bbe5f4c90?w=400&h=600&fit=crop" alt="Blade Runner 2049">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Blade Runner 2049</h3>
+                        <div class="movie-meta">
+                            <span>2017</span>
+                            <span class="rating">⭐ 8.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span>🎬</span>
+                    <span>CineMatch</span>
+            </div>
+                <p class="footer-tagline">Discover your next favorite film with curated recommendations and personalized collections.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">About</a></li>
+                    <li><a href="#" class="footer-link">Contact</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">Cookie Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CineMatch. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Watchlist Modal -->
+    <div id="watchlistModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-icon">🎬</div>
+            <h3 class="modal-title">Added to Watchlist!</h3>
+            <p class="modal-text">You've successfully added <strong>Inception</strong> to your watchlist.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Continue Browsing</button>
+                <a href="watchlist.html" class="btn btn-primary">View Watchlist</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeShareModal()">&times;</span>
+            <div class="modal-icon">📤</div>
+            <h3 class="modal-title">Share This Movie</h3>
+            <p class="modal-text">Share Inception with your friends!</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="copyLink()">Copy Link</button>
+                <button class="btn btn-primary" onclick="closeShareModal()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal() {
+            const modal = document.getElementById('watchlistModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('watchlistModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeShareModal();
+            }
+        });
+
+        // Add to Watchlist
+        function addToWatchlist() {
+            const movieTitle = 'Inception';
+            let watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+            
+            if (!watchlist.includes(movieTitle)) {
+                watchlist.push(movieTitle);
+                localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                openModal();
+            } else {
+                alert('Already in your watchlist!');
+            }
+        }
+
+        // Share movie
+        function shareMovie() {
+            openShareModal();
+        }
+
+        // Copy link
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+
+        // Watchlist buttons on related movies
+        document.querySelectorAll('.watchlist-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const movieCard = btn.closest('.movie-card');
+                const movieTitle = movieCard.querySelector('.movie-title').textContent;
+                
+                btn.textContent = '✓';
+                btn.style.background = 'var(--cm-green)';
+                btn.style.color = 'var(--cm-pearl)';
+                
+                let watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+                if (!watchlist.includes(movieTitle)) {
+                    watchlist.push(movieTitle);
+                    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                }
+            });
+        });
+
+        // Movie card click
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // In a real app, this would navigate to the specific movie
+                window.location.href = 'movie_details.html';
+            });
+        });
+
+        // Smart Page Transitions (disabled for local file compatibility)
+        // Uncomment if serving from a web server
+        /*
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && href.endsWith('.html')) {
+                    e.preventDefault();
+                    document.body.classList.add('page-exit');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                }
+            });
+        });
+        */
+    </script>
+</body>
+</html>

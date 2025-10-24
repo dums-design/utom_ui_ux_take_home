@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch - Discover Your Next Favorite Film</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* CineMatch Brand Colors - Personalized */
+            --cm-steel-blue: #2B7A9B;      /* Primary - Cooler, modern */
+            --cm-sunset-orange: #FF6B35;   /* Secondary - Warm, cinematic */
+            --cm-charcoal: #1A1D23;
+            --cm-dark-bg: #0F1419;
+            --cm-midnight: #0A0C10;
+            --cm-slate: #2A2E35;
+            --cm-steel: #4A5568;
+            --cm-silver: #9CA3AF;
+            --cm-light-gray: #F5F5F5;
+            --cm-off-white: #FAFAFA;
+            --cm-pearl: #FFFFFF;
+            
+            /* Accent Colors - Updated */
+            --cm-gold: #F59E0B;
+            --cm-magenta: #D946EF;         /* NEW - Bold & dramatic */
+            --cm-vibrant-teal: #06D6A0;    /* NEW - Fresh & modern */
+            --cm-purple: #8B5CF6;
+            --cm-amber: #FFA726;
+            --cm-rose: #F43F5E;
+            --cm-green: #10B981;
+            
+            /* Typography - Modern */
+            --font-display: 'Sora', sans-serif;
+            --font-primary: 'Plus Jakarta Sans', sans-serif;
+            
+            /* Spacing Scale */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            --space-xxxl: 64px;
+            
+            /* Animation */
+            --anim-fast: 0.15s;
+            --anim-normal: 0.3s;
+            --anim-slow: 0.5s;
+            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            background: var(--cm-off-white);
+            color: var(--cm-charcoal);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+            color: var(--cm-charcoal);
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            transition: all var(--anim-normal);
+        }
+
+        .logo:hover {
+            color: var(--cm-steel-blue);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--space-xl);
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--cm-steel);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all var(--anim-normal);
+            position: relative;
+            padding: var(--space-sm) 0;
+        }
+
+        .nav-link:hover {
+            color: var(--cm-steel-blue);
+        }
+
+        .nav-link.active {
+            color: var(--cm-steel-blue);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--cm-steel-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cm-pearl);
+            text-align: center;
+            padding: var(--space-xxxl) var(--space-lg);
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(180deg, 
+                    rgba(43, 122, 155, 0.75) 0%, 
+                    rgba(255, 107, 53, 0.65) 50%, 
+                    rgba(26, 29, 35, 0.92) 100%),
+                url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&h=1080&fit=crop&q=90');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, 
+                    rgba(0, 0, 0, 0.03) 0px, 
+                    transparent 1px, 
+                    transparent 2px, 
+                    rgba(0, 0, 0, 0.03) 3px),
+                repeating-linear-gradient(90deg, 
+                    rgba(0, 0, 0, 0.03) 0px, 
+                    transparent 1px, 
+                    transparent 2px, 
+                    rgba(0, 0, 0, 0.03) 3px);
+            opacity: 0.2;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 3;
+            animation: fadeInUp 1s var(--ease-out);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-headline {
+            font-size: 72px;
+            font-weight: 900;
+            font-family: var(--font-display);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-lg);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-subheadline {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: var(--space-xxl);
+            line-height: 1.6;
+        }
+
+        .search-container {
+            margin-bottom: var(--space-xl);
+            display: flex;
+            gap: var(--space-md);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 24px;
+            border: 2px solid transparent;
+            border-radius: var(--radius-lg);
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--cm-charcoal);
+            transition: all var(--anim-normal);
+        }
+
+        .search-input:focus {
+            background: var(--cm-pearl);
+            border-color: var(--cm-pearl);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: var(--cm-silver);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 16px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--anim-normal) var(--ease-out);
+            text-decoration: none;
+            font-family: var(--font-primary);
+        }
+
+        .btn-primary {
+            background: var(--cm-sunset-orange);
+            color: var(--cm-pearl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background: #E85A28;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-large {
+            padding: 18px 40px;
+            font-size: 18px;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: var(--space-xxxl) var(--space-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+        }
+
+        .view-all-link {
+            color: var(--cm-steel-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            transition: all var(--anim-normal);
+        }
+
+        .view-all-link:hover {
+            color: var(--cm-sunset-orange);
+            transform: translateX(4px);
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            gap: var(--space-lg);
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding-bottom: var(--space-md);
+            scrollbar-width: thin;
+            scrollbar-color: var(--cm-silver) transparent;
+        }
+
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--cm-silver);
+            border-radius: var(--radius-full);
+        }
+
+        .carousel::-webkit-scrollbar-thumb:hover {
+            background: var(--cm-steel);
+        }
+
+        /* Movie Card */
+        .movie-card {
+            flex: 0 0 240px;
+            background: var(--cm-pearl);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s var(--ease-out);
+            cursor: pointer;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 360px;
+            aspect-ratio: 2/3;
+            background: linear-gradient(135deg, var(--cm-slate), var(--cm-steel));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s var(--ease-out);
+        }
+
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+
+        .watchlist-btn {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.8);
+            transition: all 0.4s var(--ease-out);
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .movie-card:hover .watchlist-btn {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .watchlist-btn:hover {
+            background: var(--cm-sunset-orange);
+            color: var(--cm-pearl);
+            transform: translateY(0) scale(1.15);
+        }
+
+        .watchlist-btn:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .movie-info {
+            padding: var(--space-md);
+        }
+
+        .movie-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: var(--space-xs);
+            color: var(--cm-charcoal);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: var(--space-md);
+            font-size: 14px;
+            color: var(--cm-steel);
+            margin-bottom: var(--space-sm);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--cm-gold);
+            font-weight: 600;
+        }
+
+        .movie-genres {
+            display: flex;
+            gap: var(--space-xs);
+            flex-wrap: wrap;
+        }
+
+        .genre-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: var(--cm-light-gray);
+            border-radius: var(--radius-full);
+            color: var(--cm-steel);
+            font-weight: 500;
+        }
+
+        /* Collections Grid */
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .collection-card {
+            position: relative;
+            height: 240px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all var(--anim-normal) var(--ease-out);
+        }
+
+        .collection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .collection-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(43, 122, 155, 0.7), rgba(255, 107, 53, 0.7));
+            transition: all var(--anim-normal);
+        }
+
+        .collection-card:hover::before {
+            background: linear-gradient(135deg, rgba(43, 122, 155, 0.85), rgba(255, 107, 53, 0.85));
+        }
+
+        .collection-bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transition: transform var(--anim-slow) var(--ease-out);
+        }
+
+        .collection-card:hover .collection-bg-image {
+            transform: scale(1.1);
+        }
+
+        .collection-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-xl);
+            color: var(--cm-pearl);
+        }
+
+        .collection-title {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            margin-bottom: var(--space-xs);
+        }
+
+        .collection-count {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Genre Pills */
+        .genre-pills {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: var(--space-xl);
+        }
+
+        .genre-pill {
+            padding: 12px 24px;
+            background: var(--cm-pearl);
+            border: 2px solid var(--cm-light-gray);
+            border-radius: var(--radius-full);
+            color: var(--cm-charcoal);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all var(--anim-normal);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .genre-pill:hover {
+            background: var(--cm-steel-blue);
+            border-color: var(--cm-steel-blue);
+            color: var(--cm-pearl);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--cm-charcoal);
+            color: var(--cm-silver);
+            padding: var(--space-xxl) var(--space-xl);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-xxl);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-pearl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--cm-pearl);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            font-size: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .footer-link {
+            color: var(--cm-silver);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all var(--anim-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--cm-pearl);
+            padding-left: var(--space-xs);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: var(--space-xl) auto 0;
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--cm-slate);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            animation: modalFadeIn var(--anim-normal) ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--cm-pearl);
+            padding: var(--space-xxl);
+            border-radius: var(--radius-xl);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlideUp 0.4s var(--ease-out);
+            text-align: center;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            color: var(--cm-steel);
+            transition: all var(--anim-fast);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: var(--cm-light-gray);
+            color: var(--cm-charcoal);
+            transform: rotate(90deg);
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-md);
+        }
+
+        .modal-text {
+            font-size: 16px;
+            color: var(--cm-steel);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--cm-steel);
+            border: 2px solid var(--cm-light-gray);
+        }
+
+        .btn-secondary:hover {
+            background: var(--cm-light-gray);
+            border-color: var(--cm-steel);
+            color: var(--cm-charcoal);
+            transform: scale(1.02);
+        }
+
+        /* Page Load & Transition Animations */
+        body {
+            animation: pageLoad 0.5s ease;
+        }
+
+        @keyframes pageLoad {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Page Exit Transition */
+        body.page-exit {
+            animation: pageExit 0.3s ease forwards;
+        }
+
+        @keyframes pageExit {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        .section {
+            animation: sectionFadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-headline {
+                font-size: 42px;
+            }
+
+            .hero-subheadline {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: var(--space-xxl) var(--space-lg);
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: var(--space-lg);
+            }
+
+            .movie-card {
+                flex: 0 0 200px;
+            }
+
+            .movie-poster {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="landing.html" class="logo">
+                <span class="logo-icon">🎬</span>
+                <span>CineMatch</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="landing.html" class="nav-link active">Home</a></li>
+                    <li><a href="browse.html" class="nav-link">Browse</a></li>
+                    <li><a href="search.html" class="nav-link">Search</a></li>
+                    <li><a href="watchlist.html" class="nav-link">Watchlist</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="/assets/movies-selection.mp4" type="video/mp4">
+            <!-- Fallback to online video if local asset not available -->
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-movie-theater-interior-with-red-seats-44866-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-headline">Discover Your Next Favorite Film</h1>
+            <p class="hero-subheadline">Curated recommendations, personalized collections, and thousands of films to explore</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search movies, actors, directors...">
+                <button class="btn btn-primary">Search</button>
+            </div>
+            <a href="browse.html" class="btn btn-primary btn-large">Start Exploring</a>
+        </div>
+    </section>
+
+    <!-- Trending Now Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Trending Now</h2>
+            <a href="browse.html" class="view-all-link">View All →</a>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- Movie Card 1 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?w=400&h=600&fit=crop" alt="The Shawshank Redemption">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Shawshank Redemption</h3>
+                        <div class="movie-meta">
+                            <span>1994</span>
+                            <span class="rating">⭐ 9.3</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Drama</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 2 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?w=400&h=600&fit=crop" alt="Inception">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Inception</h3>
+                        <div class="movie-meta">
+                            <span>2010</span>
+                            <span class="rating">⭐ 8.8</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Sci-Fi</span>
+                            <span class="genre-tag">Thriller</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 3 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=400&h=600&fit=crop" alt="The Dark Knight">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Dark Knight</h3>
+                        <div class="movie-meta">
+                            <span>2008</span>
+                            <span class="rating">⭐ 9.0</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Action</span>
+                            <span class="genre-tag">Crime</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 4 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop" alt="Pulp Fiction">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Pulp Fiction</h3>
+                        <div class="movie-meta">
+                            <span>1994</span>
+                            <span class="rating">⭐ 8.9</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Crime</span>
+                            <span class="genre-tag">Drama</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 5 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=400&h=600&fit=crop" alt="Interstellar">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Interstellar</h3>
+                        <div class="movie-meta">
+                            <span>2014</span>
+                            <span class="rating">⭐ 8.7</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Sci-Fi</span>
+                            <span class="genre-tag">Adventure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 6 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=600&fit=crop" alt="The Matrix">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Matrix</h3>
+                        <div class="movie-meta">
+                            <span>1999</span>
+                            <span class="rating">⭐ 8.7</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Sci-Fi</span>
+                            <span class="genre-tag">Action</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 7 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=400&h=600&fit=crop" alt="Parasite">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Parasite</h3>
+                        <div class="movie-meta">
+                            <span>2019</span>
+                            <span class="rating">⭐ 8.5</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Thriller</span>
+                            <span class="genre-tag">Drama</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 8 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1603575448878-868a20723f5d?w=400&h=600&fit=crop" alt="Get Out">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Get Out</h3>
+                        <div class="movie-meta">
+                            <span>2017</span>
+                            <span class="rating">⭐ 7.7</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Horror</span>
+                            <span class="genre-tag">Thriller</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 9 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?w=400&h=600&fit=crop" alt="Mad Max: Fury Road">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">Mad Max: Fury Road</h3>
+                        <div class="movie-meta">
+                            <span>2015</span>
+                            <span class="rating">⭐ 8.1</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Action</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Card 10 -->
+                <div class="movie-card">
+                    <div class="movie-poster">
+                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=600&fit=crop" alt="La La Land">
+                        <button class="watchlist-btn" title="Add to Watchlist">+</button>
+                    </div>
+                    <div class="movie-info">
+                        <h3 class="movie-title">La La Land</h3>
+                        <div class="movie-meta">
+                            <span>2016</span>
+                            <span class="rating">⭐ 8.0</span>
+                        </div>
+                        <div class="movie-genres">
+                            <span class="genre-tag">Musical</span>
+                            <span class="genre-tag">Romance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Collections Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Curated Collections</h2>
+        </div>
+        <div class="collections-grid">
+            <!-- Collection 1 -->
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=600&fit=crop" alt="Hidden Gems" class="collection-bg-image">
+                <div class="collection-content">
+                    <h3 class="collection-title">Hidden Gems</h3>
+                    <p class="collection-count">24 films</p>
+                </div>
+            </div>
+
+            <!-- Collection 2 -->
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1571847820157-97c00e4d0e2e?w=800&h=600&fit=crop" alt="Classic Thrillers" class="collection-bg-image">
+                <div class="collection-content">
+                    <h3 class="collection-title">Classic Thrillers</h3>
+                    <p class="collection-count">18 films</p>
+                </div>
+            </div>
+
+            <!-- Collection 3 -->
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1579547945413-497e1b99dac0?w=800&h=600&fit=crop" alt="Award Winners" class="collection-bg-image">
+                <div class="collection-content">
+                    <h3 class="collection-title">Award Winners</h3>
+                    <p class="collection-count">32 films</p>
+                </div>
+            </div>
+
+            <!-- Collection 4 -->
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800&h=600&fit=crop" alt="90s Nostalgia" class="collection-bg-image">
+                <div class="collection-content">
+                    <h3 class="collection-title">90s Nostalgia</h3>
+                    <p class="collection-count">28 films</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="section" style="padding-top: 0;">
+        <div class="section-header">
+            <h2 class="section-title">Browse by Genre</h2>
+        </div>
+        <div class="genre-pills">
+            <a href="browse.html" class="genre-pill">Action</a>
+            <a href="browse.html" class="genre-pill">Drama</a>
+            <a href="browse.html" class="genre-pill">Comedy</a>
+            <a href="browse.html" class="genre-pill">Sci-Fi</a>
+            <a href="browse.html" class="genre-pill">Horror</a>
+            <a href="browse.html" class="genre-pill">Romance</a>
+            <a href="browse.html" class="genre-pill">Thriller</a>
+            <a href="browse.html" class="genre-pill">Documentary</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span>🎬</span>
+                    <span>CineMatch</span>
+                </div>
+                <p class="footer-tagline">Discover your next favorite film with curated recommendations and personalized collections.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">About</a></li>
+                    <li><a href="#" class="footer-link">Contact</a></li>
+                    <li><a href="#" class="footer-link">Careers</a></li>
+                    <li><a href="#" class="footer-link">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    <li><a href="#" class="footer-link">Cookie Policy</a></li>
+                    <li><a href="#" class="footer-link">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CineMatch. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Watchlist Modal -->
+    <div id="watchlistModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-icon">🎬</div>
+            <h3 class="modal-title" id="modalTitle">Added to Watchlist!</h3>
+            <p class="modal-text" id="modalText">You've successfully added <strong id="movieTitleInModal"></strong> to your watchlist.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()">Continue Browsing</button>
+                <a href="watchlist.html" class="btn btn-primary">View Watchlist</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(movieTitle) {
+            const modal = document.getElementById('watchlistModal');
+            const movieTitleElement = document.getElementById('movieTitleInModal');
+            movieTitleElement.textContent = movieTitle;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('watchlistModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('watchlistModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Add to Watchlist functionality
+        document.querySelectorAll('.watchlist-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const movieCard = btn.closest('.movie-card');
+                const movieTitle = movieCard.querySelector('.movie-title').textContent;
+                
+                // Visual feedback on button
+                btn.textContent = '✓';
+                btn.style.background = 'var(--cm-green)';
+                btn.style.color = 'var(--cm-pearl)';
+                
+                // Open modal
+                setTimeout(() => {
+                    openModal(movieTitle);
+                }, 300);
+                
+                // Save to localStorage
+                let watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+                if (!watchlist.includes(movieTitle)) {
+                    watchlist.push(movieTitle);
+                    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+                }
+                
+                console.log(`Added "${movieTitle}" to watchlist`);
+            });
+        });
+
+        // Movie card click to details page
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.location.href = 'movie_details.html';
+            });
+        });
+
+        // Collection card click
+        document.querySelectorAll('.collection-card').forEach(card => {
+            card.addEventListener('click', () => {
+                window.location.href = 'browse.html';
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-container .btn-primary');
+        
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                console.log(`Searching for: ${query}`);
+                // In a real app, this would navigate to search results
+                // window.location.href = `search_results.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+
+        // Smooth scroll reveal for sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smart Page Transitions (disabled for local file compatibility)
+        // Uncomment if serving from a web server
+        /*
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('http') && href.endsWith('.html')) {
+                    e.preventDefault();
+                    document.body.classList.add('page-exit');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                }
+            });
+        });
+        */
+    </script>
+</body>
+</html>
+

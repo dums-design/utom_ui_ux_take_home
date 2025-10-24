@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch - Personalized Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Updated Modern Font Pairing -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 🎨 PERSONALIZED CineMatch Brand Colors */
+            
+            /* Primary Colors - Cooler Blue Palette */
+            --cm-steel-blue: #2B7A9B;      /* Primary - Cooler, more modern blue */
+            --cm-sunset-orange: #FF6B35;   /* Secondary - Warm, cinematic energy */
+            --cm-charcoal: #1A1D23;        /* Dark primary */
+            --cm-dark-bg: #0F1419;         /* Background dark */
+            --cm-midnight: #0A0C10;        /* Deepest black */
+            --cm-slate: #2A2E35;           /* Surface dark */
+            --cm-steel: #4A5568;           /* Mid-tone gray */
+            --cm-silver: #9CA3AF;          /* Light gray text */
+            --cm-light-gray: #F5F5F5;      /* Light backgrounds */
+            --cm-off-white: #FAFAFA;       /* Off white */
+            --cm-pearl: #FFFFFF;           /* Pure white */
+            
+            /* ✨ Unique Accent Colors */
+            --cm-gold: #F59E0B;            /* Awards/featured */
+            --cm-magenta: #D946EF;         /* Drama/Featured - Modern & Bold */
+            --cm-vibrant-teal: #06D6A0;    /* Success/Fresh - Contemporary */
+            --cm-electric-purple: #8B5CF6; /* Alternative accent */
+            --cm-amber: #FFA726;           /* Action genre */
+            --cm-rose: #F43F5E;            /* Romance genre */
+            --cm-emerald: #10B981;         /* Positive ratings */
+            
+            /* Functional Colors */
+            --primary: var(--cm-steel-blue);
+            --secondary: var(--cm-sunset-orange);
+            --success: var(--cm-vibrant-teal);
+            --warning: var(--cm-gold);
+            --error: var(--cm-rose);
+            --info: var(--cm-steel-blue);
+            
+            /* 🔤 Modern Typography */
+            --font-display: 'Sora', sans-serif;           /* Modern, geometric headings */
+            --font-primary: 'Plus Jakarta Sans', sans-serif;  /* Clean, contemporary UI */
+            --font-mono: 'Monaco', 'Courier New', monospace;
+            
+            /* Spacing Scale */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+            --space-xxxl: 64px;
+            
+            /* Animation */
+            --anim-fast: 0.15s;
+            --anim-normal: 0.3s;
+            --anim-slow: 0.5s;
+            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Shadows - Cinematic depth */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px rgba(43, 122, 155, 0.4);
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.6;
+            background: var(--cm-off-white);
+            color: var(--cm-charcoal);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography Scale */
+        .text-display {
+            font-size: 48px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .text-heading {
+            font-size: 36px;
+            font-weight: 700;
+            font-family: var(--font-display);
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+        .text-title {
+            font-size: 24px;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            line-height: 1.3;
+        }
+        .text-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            font-family: var(--font-primary);
+            line-height: 1.4;
+        }
+        .text-body {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        .text-small {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        .text-caption {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .text-muted {
+            color: var(--cm-silver);
+        }
+        
+        /* Main Structure */
+        .header {
+            background: linear-gradient(135deg, var(--cm-steel-blue), var(--cm-sunset-orange));
+            color: var(--cm-pearl);
+            text-align: center;
+            padding: var(--space-xxxl) var(--space-lg);
+        }
+        .header h1 {
+            font-size: 56px;
+            font-family: var(--font-display);
+            margin-bottom: var(--space-md);
+            font-weight: 800;
+        }
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+        
+        .main-content {
+            background: var(--cm-off-white);
+        }
+        .section {
+            padding: var(--space-xxxl) var(--space-lg);
+            max-width: 1400px;
+            margin: 0 auto;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section-header {
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            font-family: var(--font-display);
+            color: var(--cm-charcoal);
+            margin-bottom: var(--space-sm);
+        }
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--cm-steel);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .component-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        /* Color System */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-lg);
+        }
+        .color-swatch {
+            border: 1px solid #E5E7EB;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--anim-normal);
+            cursor: pointer;
+        }
+        .color-swatch:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .color-blob {
+            height: 120px;
+        }
+        .color-info {
+            padding: var(--space-md);
+            background: var(--cm-pearl);
+        }
+        .color-info strong {
+            font-weight: 600;
+            font-size: 14px;
+            display: block;
+            margin-bottom: var(--space-xs);
+        }
+        .color-info span {
+            display: block;
+            font-size: 12px;
+            color: var(--cm-silver);
+            font-family: var(--font-mono);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all var(--anim-normal) var(--ease-out);
+            text-decoration: none;
+            font-family: var(--font-primary);
+        }
+        .btn-primary {
+            background: var(--cm-steel-blue);
+            color: var(--cm-pearl);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-primary:hover {
+            background: #236382;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-secondary {
+            background: var(--cm-sunset-orange);
+            color: var(--cm-pearl);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-secondary:hover {
+            background: #E85A28;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-accent {
+            background: var(--cm-magenta);
+            color: var(--cm-pearl);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-accent:hover {
+            background: #C233D9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--cm-steel-blue);
+            border-color: var(--cm-steel-blue);
+        }
+        .btn-outline:hover {
+            background: var(--cm-steel-blue);
+            color: var(--cm-pearl);
+            transform: translateY(-2px);
+        }
+        
+        /* Interactive Card */
+        .interactive-card {
+            background: var(--cm-pearl);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid #E5E7EB;
+            transition: all var(--anim-normal);
+        }
+        .interactive-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+
+        .comparison-card {
+            background: var(--cm-pearl);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comparison-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            font-family: var(--font-display);
+        }
+
+        .comparison-card.old {
+            border: 2px solid #E5E7EB;
+        }
+
+        .comparison-card.new {
+            border: 3px solid var(--cm-steel-blue);
+            background: linear-gradient(135deg, rgba(43, 122, 155, 0.03), rgba(255, 107, 53, 0.03));
+        }
+
+        .color-pair {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .color-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .color-details {
+            flex: 1;
+        }
+
+        .color-details strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .color-details code {
+            font-size: 12px;
+            color: var(--cm-steel);
+            font-family: var(--font-mono);
+            background: var(--cm-light-gray);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: var(--space-sm);
+        }
+
+        .badge-new {
+            background: var(--cm-vibrant-teal);
+            color: white;
+        }
+
+        .badge-improved {
+            background: var(--cm-magenta);
+            color: white;
+        }
+
+        /* Utility Classes */
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .mt-sm { margin-top: var(--space-sm); }
+        .mt-md { margin-top: var(--space-md); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .text-center { text-align: center; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🎬 CineMatch Personalized Design System</h1>
+        <p>Modern, unique, and cinematic - A refreshed visual identity</p>
+    </header>
+
+    <main class="main-content">
+        <!-- What Changed Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">✨ What's New & Different</h2>
+                <p class="section-subtitle">Your personalized design system with cooler tones and modern typography</p>
+            </div>
+
+            <div class="comparison-grid">
+                <!-- Original Design -->
+                <div class="comparison-card old">
+                    <h3>Original Design</h3>
+                    <div class="color-pair">
+                        <div class="color-preview" style="background: #2C5F87;"></div>
+                        <div class="color-details">
+                            <strong>Deep Blue</strong>
+                            <code>#2C5F87</code>
+                            <p style="font-size: 13px; color: var(--cm-steel); margin-top: 4px;">Warm, traditional blue</p>
+                        </div>
+                    </div>
+                    <div class="color-pair">
+                        <div class="color-preview" style="background: #E94B3C;"></div>
+                        <div class="color-details">
+                            <strong>Coral Red</strong>
+                            <code>#E94B3C</code>
+                            <p style="font-size: 13px; color: var(--cm-steel); margin-top: 4px;">Warm coral accent</p>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--cm-steel); margin-top: var(--space-md);">
+                        <strong>Fonts:</strong><br>
+                        Playfair Display + Inter
+                    </p>
+                </div>
+
+                <!-- New Design -->
+                <div class="comparison-card new">
+                    <h3>✨ Personalized Design <span class="badge badge-new">NEW</span></h3>
+                    <div class="color-pair">
+                        <div class="color-preview" style="background: #2B7A9B;"></div>
+                        <div class="color-details">
+                            <strong>Steel Blue</strong>
+                            <code>#2B7A9B</code>
+                            <p style="font-size: 13px; color: var(--cm-steel); margin-top: 4px;">Cooler, modern blue</p>
+                        </div>
+                    </div>
+                    <div class="color-pair">
+                        <div class="color-preview" style="background: #FF6B35;"></div>
+                        <div class="color-details">
+                            <strong>Sunset Orange</strong>
+                            <code>#FF6B35</code>
+                            <p style="font-size: 13px; color: var(--cm-steel); margin-top: 4px;">Warm, cinematic energy</p>
+                        </div>
+                    </div>
+                    <div class="color-pair">
+                        <div class="color-preview" style="background: #D946EF;"></div>
+                        <div class="color-details">
+                            <strong>Magenta (New!)</strong>
+                            <code>#D946EF</code>
+                            <p style="font-size: 13px; color: var(--cm-steel); margin-top: 4px;">Bold, dramatic accent</p>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--cm-steel); margin-top: var(--space-md);">
+                        <strong>Fonts:</strong><br>
+                        Sora + Plus Jakarta Sans <span class="badge badge-improved">MODERN</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary Colors -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Primary Colors</h2>
+                <p class="section-subtitle">Cooler blue with warm, cinematic accents</p>
+            </div>
+            
+            <div class="color-grid">
+                <div class="color-swatch" onclick="copyColor('--cm-steel-blue')">
+                    <div class="color-blob" style="background: #2B7A9B;"></div>
+                    <div class="color-info">
+                        <strong>Steel Blue ✨</strong>
+                        <span>--cm-steel-blue</span>
+                        <span>#2B7A9B</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-sunset-orange')">
+                    <div class="color-blob" style="background: #FF6B35;"></div>
+                    <div class="color-info">
+                        <strong>Sunset Orange ✨</strong>
+                        <span>--cm-sunset-orange</span>
+                        <span>#FF6B35</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-charcoal')">
+                    <div class="color-blob" style="background: #1A1D23;"></div>
+                    <div class="color-info">
+                        <strong>Charcoal</strong>
+                        <span>--cm-charcoal</span>
+                        <span>#1A1D23</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-dark-bg')">
+                    <div class="color-blob" style="background: #0F1419;"></div>
+                    <div class="color-info">
+                        <strong>Dark Background</strong>
+                        <span>--cm-dark-bg</span>
+                        <span>#0F1419</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unique Accent Colors -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">✨ Unique Accent Colors</h2>
+                <p class="section-subtitle">Bold, modern accents that make your brand stand out</p>
+            </div>
+            
+            <div class="color-grid">
+                <div class="color-swatch" onclick="copyColor('--cm-magenta')">
+                    <div class="color-blob" style="background: #D946EF;"></div>
+                    <div class="color-info">
+                        <strong>Magenta ⚡ NEW</strong>
+                        <span>--cm-magenta</span>
+                        <span>#D946EF</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-vibrant-teal')">
+                    <div class="color-blob" style="background: #06D6A0;"></div>
+                    <div class="color-info">
+                        <strong>Vibrant Teal ⚡ NEW</strong>
+                        <span>--cm-vibrant-teal</span>
+                        <span>#06D6A0</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-gold')">
+                    <div class="color-blob" style="background: #F59E0B;"></div>
+                    <div class="color-info">
+                        <strong>Gold</strong>
+                        <span>--cm-gold</span>
+                        <span>#F59E0B</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-emerald')">
+                    <div class="color-blob" style="background: #10B981;"></div>
+                    <div class="color-info">
+                        <strong>Emerald</strong>
+                        <span>--cm-emerald</span>
+                        <span>#10B981</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-amber')">
+                    <div class="color-blob" style="background: #FFA726;"></div>
+                    <div class="color-info">
+                        <strong>Amber</strong>
+                        <span>--cm-amber</span>
+                        <span>#FFA726</span>
+                    </div>
+                </div>
+                <div class="color-swatch" onclick="copyColor('--cm-rose')">
+                    <div class="color-blob" style="background: #F43F5E;"></div>
+                    <div class="color-info">
+                        <strong>Rose</strong>
+                        <span>--cm-rose</span>
+                        <span>#F43F5E</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Modern Typography</h2>
+                <p class="section-subtitle">Sora for bold headings, Plus Jakarta Sans for clean UI</p>
+            </div>
+            
+            <div class="interactive-card mb-lg">
+                <p class="text-display">Discover Your Next Favorite Film</p>
+                <p class="text-small text-muted mt-md">Display: 48px, Sora, 800 weight - Modern & geometric</p>
+            </div>
+            
+            <div class="interactive-card mb-lg">
+                <p class="text-heading">The Shawshank Redemption</p>
+                <p class="text-small text-muted mt-md">Heading: 36px, Sora, 700 weight - Bold & contemporary</p>
+            </div>
+            
+            <div class="interactive-card mb-lg">
+                <p class="text-title">Trending Now</p>
+                <p class="text-small text-muted mt-md">Title: 24px, Plus Jakarta Sans, 600 weight</p>
+            </div>
+            
+            <div class="interactive-card mb-lg">
+                <p class="text-body">A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.</p>
+                <p class="text-small text-muted mt-md">Body: 16px, Plus Jakarta Sans, 400 weight - Clean & readable</p>
+            </div>
+        </section>
+
+        <!-- Buttons -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Button Variants</h2>
+                <p class="section-subtitle">Updated with new color palette</p>
+            </div>
+            
+            <div class="interactive-card mb-lg">
+                <h3 class="text-title mb-md">New Button Styles</h3>
+                <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+                    <button class="btn btn-primary">Steel Blue Primary</button>
+                    <button class="btn btn-secondary">Sunset Orange</button>
+                    <button class="btn btn-accent">Magenta Accent</button>
+                    <button class="btn btn-outline">Outline Style</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Recommendations -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">🎨 Design Recommendations</h2>
+                <p class="section-subtitle">How to use your personalized system</p>
+            </div>
+            
+            <div class="component-showcase">
+                <div class="interactive-card">
+                    <h3 class="text-title mb-md">1. Primary Blue Usage</h3>
+                    <p class="text-body text-muted">Use <strong>Steel Blue (#2B7A9B)</strong> for:</p>
+                    <ul style="margin-left: 20px; margin-top: 12px; color: var(--cm-steel);">
+                        <li>Primary buttons and CTAs</li>
+                        <li>Navigation highlights</li>
+                        <li>Links and interactive elements</li>
+                        <li>Gradients with Sunset Orange</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-card">
+                    <h3 class="text-title mb-md">2. Accent Colors</h3>
+                    <p class="text-body text-muted">Strategic accent usage:</p>
+                    <ul style="margin-left: 20px; margin-top: 12px; color: var(--cm-steel);">
+                        <li><strong>Magenta:</strong> Featured content, premium badges</li>
+                        <li><strong>Vibrant Teal:</strong> Success states, positive actions</li>
+                        <li><strong>Sunset Orange:</strong> Energy, excitement, CTAs</li>
+                    </ul>
+                </div>
+                
+                <div class="interactive-card">
+                    <h3 class="text-title mb-md">3. Font Pairing Tips</h3>
+                    <p class="text-body text-muted">Modern typography guidance:</p>
+                    <ul style="margin-left: 20px; margin-top: 12px; color: var(--cm-steel);">
+                        <li><strong>Sora:</strong> Headings, titles, hero text</li>
+                        <li><strong>Plus Jakarta Sans:</strong> Body, UI, cards</li>
+                        <li>Maintain strong hierarchy with size/weight</li>
+                        <li>Geometric feel creates modern aesthetic</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Variables Reference -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Updated CSS Variables</h2>
+                <p class="section-subtitle">Copy and use in your stylesheets</p>
+            </div>
+            
+            <div class="interactive-card">
+                <pre style="background: var(--cm-charcoal); color: var(--cm-light-gray); padding: var(--space-lg); border-radius: var(--radius-md); overflow-x: auto; font-size: 14px; line-height: 1.6;">
+:root {
+  /* ✨ Primary Colors - Cooler & Modern */
+  --cm-steel-blue: #2B7A9B;      /* Primary (was Deep Blue #2C5F87) */
+  --cm-sunset-orange: #FF6B35;   /* Secondary (was Coral Red #E94B3C) */
+  --cm-charcoal: #1A1D23;
+  --cm-dark-bg: #0F1419;
+  
+  /* ⚡ Unique Accents */
+  --cm-magenta: #D946EF;         /* NEW - Bold & Dramatic */
+  --cm-vibrant-teal: #06D6A0;    /* NEW - Fresh & Modern */
+  --cm-gold: #F59E0B;
+  --cm-emerald: #10B981;
+  --cm-amber: #FFA726;
+  --cm-rose: #F43F5E;
+  
+  /* Neutrals */
+  --cm-steel: #4A5568;
+  --cm-silver: #9CA3AF;
+  --cm-light-gray: #F5F5F5;
+  --cm-pearl: #FFFFFF;
+  
+  /* 🔤 Modern Typography */
+  --font-display: 'Sora', sans-serif;              /* NEW */
+  --font-primary: 'Plus Jakarta Sans', sans-serif;  /* NEW */
+  
+  /* Functional Colors */
+  --primary: var(--cm-steel-blue);
+  --secondary: var(--cm-sunset-orange);
+  --success: var(--cm-vibrant-teal);
+  --warning: var(--cm-gold);
+  --error: var(--cm-rose);
+  
+  /* Spacing (unchanged) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  
+  /* Animation (unchanged) */
+  --anim-fast: 0.15s;
+  --anim-normal: 0.3s;
+  --anim-slow: 0.5s;
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  
+  /* Shadows (unchanged) */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  
+  /* Border Radius (unchanged) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}</pre>
+            </div>
+        </section>
+
+        <!-- Google Fonts Import -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Font Import Code</h2>
+                <p class="section-subtitle">Add this to your HTML head</p>
+            </div>
+            
+            <div class="interactive-card">
+                <pre style="background: var(--cm-charcoal); color: var(--cm-light-gray); padding: var(--space-lg); border-radius: var(--radius-md); overflow-x: auto; font-size: 14px; line-height: 1.6;">&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"&gt;</pre>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function copyColor(variable) {
+            const text = `var(${variable})`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Copied "${text}" to clipboard!`);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+</body>
+</html>
+
